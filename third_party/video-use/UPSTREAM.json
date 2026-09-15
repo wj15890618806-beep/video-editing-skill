@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/browser-use/video-use",
+  "commit": "9575612f066aa517354790a645fd90f9f95a743b",
+  "checked_at": "2026-09-15",
+  "stars_at_check": 24897,
+  "selection": "GitHub repository name search: video-use in:name, stars descending",
+  "license": "MIT",
+  "vendored": ["helpers/*.py", "pyproject.toml", "LICENSE"],
+  "local_changes": [
+    "Windows forward-slash paths and UTF-8 ffconcat lists",
+    "Windows FFmpeg subtitle and auto-grade metadata path escaping",
+    "Windows Chinese font candidates for timeline images"
+  ]
+}
