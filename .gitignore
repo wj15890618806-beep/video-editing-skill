@@ -1,0 +1,33 @@
+# Local media and private project artifacts
+local/
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.avi
+*.m4v
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+*.srt
+*.vtt
+*.ass
+*.prproj
+*.drp
+
+# Credentials and generated environment files
+.env
+.env.*
+!.env.example
+*cookies*.txt
+*cookies*.json
+*.pem
+*.key
+.venv/
+venv/
+__pycache__/
+node_modules/
+.DS_Store
+Thumbs.db
