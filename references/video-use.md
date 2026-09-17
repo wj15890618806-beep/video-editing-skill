@@ -35,6 +35,19 @@ python scripts/video_use.py render local/projects/案例/edl.json -o local/expor
 
 自动转写依赖 ElevenLabs：在安装目录 `.env` 写 `ELEVENLABS_API_KEY=...`，或设置同名环境变量；不在聊天或公开仓库记录密钥。doctor 只检测配置存在，不证明密钥有效。未配置时可继续素材检查、已有逐字稿的剪辑决策和 EDL 渲染；不能宣称自动转写已就绪。安装验证不调用付费转写。实际转写会向 ElevenLabs 上传音频，首次使用前告知用户，依照当前任务授权和素材约束决定是否调用。
 
+### 已有本地 Whisper 时的离线转写
+
+若本机已安装 `openai-whisper`、PyTorch、FFmpeg，且 `~/.cache/whisper/` 已有模型，可使用本项目的离线入口。它不上传音频，也不会自动下载模型；无需 ElevenLabs 密钥。这里使用安装了 Whisper 的 Python，而非 video-use 的独立环境。
+
+```powershell
+python scripts/transcribe_local.py "local/source/素材.mp4" --edit-dir local/projects/案例 --model small --language zh
+python scripts/video_use.py pack_transcripts --edit-dir local/projects/案例
+```
+
+结果保存在 `transcripts/<素材名>.json`，同时保留 Whisper 原始分段和供 video-use 使用的 `words`。缓存核对源文件 SHA-256、音轨、模型文件 SHA-256、引擎版本和转写参数；同名缓存不匹配时要求使用新案例目录，不覆盖旧结果。`--audio-track` 从 0 开始。该入口没有说话人分离和声音事件识别，不能把词时间戳视为精确剪点。
+
+实片验证中，中文同音词、专业缩写、数字仍可能错识。修正明显错字后，对不确定词用另一模型或局部片段复核；最后对导出音轨再次转写，只能辅助检查语句保留和切断，不能替代试听。该脚本已验证本地实片转写、缓存命中及 `pack_transcripts` 兼容；结果和素材只存本地忽略目录。
+
 ## 初剪工作法
 
 1. 读取已有 `local/projects/<案例>/project.md` 和参考拆解。探测所有素材的实际时长、画幅、帧率、音轨和 HDR 信息。
